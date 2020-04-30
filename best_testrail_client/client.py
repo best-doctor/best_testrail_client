@@ -3,6 +3,7 @@ from typing import Dict, Any, List, Optional
 
 from best_testrail_client.custom_types import UserID
 from best_testrail_client.exceptions import TestRailException
+from best_testrail_client.models.status import Status
 from best_testrail_client.models.template import Template
 from best_testrail_client.models.user import User
 
@@ -20,6 +21,11 @@ class TestRailClient:
     # Custom methods
     def set_project_id(self, project_id: int) -> None:
         self.project_id = project_id
+
+    # Status API
+    def get_statuses(self) -> List[Status]:
+        statuses_data = self.__request('get_statuses')
+        return [Status.from_json(status) for status in statuses_data]
 
     # Templates API
     def get_templates(self, project_id: int = None) -> List[Template]:
