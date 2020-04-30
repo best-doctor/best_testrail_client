@@ -15,3 +15,9 @@ class BaseModel:
     @classmethod
     def from_json(cls: typing.Type[BaseModelType], data_json: JsonData) -> BaseModelType:
         return cls(**data_json)
+
+    def to_json(self, include_none: bool = False) -> JsonData:
+        return {
+            key: value for key, value in self.__dict__.items()
+            if (value is not None or include_none)
+        }

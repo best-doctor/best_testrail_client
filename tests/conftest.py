@@ -1,5 +1,6 @@
 import pytest
 
+from best_testrail_client.models.section import Section
 from best_testrail_client.models.status import Status
 from best_testrail_client.models.template import Template
 from best_testrail_client.models.user import User
@@ -52,3 +53,21 @@ def status_data():
 @pytest.fixture
 def status(status_data):
     return Status.from_json(data_json=status_data)
+
+
+@pytest.fixture
+def section_data():
+    return {
+        'depth': 0,
+        'description': None,
+        'display_order': 1,
+        'id': 1,
+        'name': 'Prerequisites',
+        'parent_id': None,
+        'suite_id': 1,
+    }
+
+
+@pytest.fixture
+def section(section_data):
+    return Section.from_json(data_json=section_data)
