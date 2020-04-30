@@ -1,7 +1,9 @@
-from typing import Dict, Any
+import typing
 
-UserID = int
+ModelID = int
 FieldName = str
-FieldValue = Any
+FieldValue = typing.Any
 
-JsonData = Dict[FieldName, FieldValue]
+JsonData = typing.Dict[FieldName, FieldValue]
+
+Method = typing.Literal['GET', 'POST']

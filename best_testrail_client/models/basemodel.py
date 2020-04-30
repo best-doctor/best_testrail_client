@@ -3,15 +3,15 @@ from __future__ import annotations
 from best_testrail_client.custom_types import JsonData
 
 if False:  # TYPE_CHECKING
-    from typing import TypeVar, Type, Any
+    import typing
 
-    BaseModelType = TypeVar('BaseModelType', bound='BaseModel')
+    BaseModelType = typing.TypeVar('BaseModelType', bound='BaseModel')
 
 
 class BaseModel:
-    def __init__(self, **kwargs: Any):
+    def __init__(self, **kwargs: typing.Any):
         pass
 
     @classmethod
-    def from_json(cls: Type[BaseModelType], data_json: JsonData) -> BaseModelType:
+    def from_json(cls: typing.Type[BaseModelType], data_json: JsonData) -> BaseModelType:
         return cls(**data_json)

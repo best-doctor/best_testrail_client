@@ -1,4 +1,6 @@
-from typing import Optional
+from __future__ import annotations
+
+import typing
 
 from setuptools import setup, find_packages
 
@@ -6,7 +8,7 @@ from setuptools import setup, find_packages
 package_name = 'best_testrail_client'
 
 
-def get_version() -> Optional[str]:
+def get_version() -> typing.Optional[str]:
     with open('best_testrail_client/__init__.py', 'r') as f:
         lines = f.readlines()
     for line in lines:
