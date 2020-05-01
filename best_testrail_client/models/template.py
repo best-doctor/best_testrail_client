@@ -1,10 +1,10 @@
-from dataclasses import dataclass
+import dataclasses
 
 from best_testrail_client.custom_types import ModelID
 from best_testrail_client.models.basemodel import BaseModel
 
 
-@dataclass
+@dataclasses.dataclass
 class Template(BaseModel):
     id: ModelID  # noqa: A003, VNE003
     is_default: bool

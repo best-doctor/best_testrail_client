@@ -1,10 +1,10 @@
-from dataclasses import dataclass
+import dataclasses
 
 from best_testrail_client.custom_types import ModelID
 from best_testrail_client.models.basemodel import BaseModel
 
 
-@dataclass
+@dataclasses.dataclass
 class Status(BaseModel):
     color_bright: int
     color_dark: int

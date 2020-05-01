@@ -1,7 +1,7 @@
 import json
 
 import pytest
-from requests import Response
+import requests
 
 from best_testrail_client.client import TestRailClient
 
@@ -16,7 +16,7 @@ def mocked_response(mocker):
     def _with_response(raw_data=None, data_json=None, status_code=200):
 
         mocked_requests = mocker.patch('best_testrail_client.client.requests.request')
-        response = Response()
+        response = requests.Response()
         if data_json is not None:
             response._content = json.dumps(data_json).encode('utf8')
         else:
