@@ -28,15 +28,13 @@ class TestRailClient:
         self.project_id = project_id
         return self
 
-    # Result Fields API
-    """http://docs.gurock.com/testrail-api2/reference-results-fields"""
+    # Result Fields API  http://docs.gurock.com/testrail-api2/reference-results-fields
     def get_result_fields(self) -> typing.List[ResultFields]:
         """http://docs.gurock.com/testrail-api2/reference-results-fields#get_result_fields"""
         result_fields_data = self.__request('get_result_fields')
         return [ResultFields.from_json(result_fields) for result_fields in result_fields_data]
 
-    # Sections API
-    """http://docs.gurock.com/testrail-api2/reference-sections"""
+    # Sections API  http://docs.gurock.com/testrail-api2/reference-sections
     def get_section(self, section_id: ModelID) -> Section:
         """http://docs.gurock.com/testrail-api2/reference-sections#get_section"""
         section_data = self.__request(f'get_section/{section_id}')
@@ -82,15 +80,13 @@ class TestRailClient:
         self.__request(f'delete_section/{section_id}', method='POST', _return_json=False)
         return True
 
-    # Status API
-    """http://docs.gurock.com/testrail-api2/reference-statuses"""
+    # Statuses API  http://docs.gurock.com/testrail-api2/reference-statuses
     def get_statuses(self) -> typing.List[Status]:
         """http://docs.gurock.com/testrail-api2/reference-statuses#get_statuses"""
         statuses_data = self.__request('get_statuses')
         return [Status.from_json(status) for status in statuses_data]
 
-    # Templates API
-    """http://docs.gurock.com/testrail-api2/reference-templates"""
+    # Templates API  http://docs.gurock.com/testrail-api2/reference-templates
     def get_templates(self, project_id: typing.Optional[ModelID] = None) -> typing.List[Template]:
         """http://docs.gurock.com/testrail-api2/reference-templates#get_templates"""
         project_id = project_id or self.project_id
@@ -99,8 +95,7 @@ class TestRailClient:
         templates_data = self.__request(f'get_templates/{project_id}')
         return [Template.from_json(template) for template in templates_data]
 
-    # Users API
-    """http://docs.gurock.com/testrail-api2/reference-users"""
+    # Users API  http://docs.gurock.com/testrail-api2/reference-users
     def get_user(self, user_id: ModelID) -> User:
         """http://docs.gurock.com/testrail-api2/reference-users#get_user"""
         user_data = self.__request(f'get_user/{user_id}')
