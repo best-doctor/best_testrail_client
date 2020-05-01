@@ -12,6 +12,7 @@ from best_testrail_client.models.user import User
 
 
 class TestRailClient:
+    """http://docs.gurock.com/testrail-api2/start"""
     def __init__(self, testrail_url: str, login: str, token: str):
         self.token = token
         self.login = login
@@ -27,7 +28,9 @@ class TestRailClient:
         return self
 
     # Sections API
+    """http://docs.gurock.com/testrail-api2/reference-sections"""
     def get_section(self, section_id: ModelID) -> Section:
+        """http://docs.gurock.com/testrail-api2/reference-sections#get_section"""
         section_data = self.__request(f'get_section/{section_id}')
         return Section.from_json(section_data)
 
@@ -35,6 +38,7 @@ class TestRailClient:
         self,
         project_id: typing.Optional[ModelID] = None, suite_id: typing.Optional[ModelID] = None,
     ) -> typing.List[Section]:
+        """http://docs.gurock.com/testrail-api2/reference-sections#get_sections"""
         project_id = project_id or self.project_id
         if project_id is None:
             raise TestRailException('Provide project id')
@@ -43,6 +47,7 @@ class TestRailClient:
         return [Section.from_json(section) for section in sections_data]
 
     def add_section(self, section: Section, project_id: typing.Optional[ModelID] = None) -> Section:
+        """http://docs.gurock.com/testrail-api2/reference-sections#add_section"""
         project_id = project_id or self.project_id
         if project_id is None:
             raise TestRailException('Provide project id')
@@ -55,6 +60,7 @@ class TestRailClient:
     def update_section(
         self, section_id: ModelID, name: str, description: typing.Optional[str] = None,
     ) -> Section:
+        """http://docs.gurock.com/testrail-api2/reference-sections#update_section"""
         new_section_data = {'name': name}
         if description is not None:
             new_section_data['description'] = description
@@ -64,16 +70,21 @@ class TestRailClient:
         return Section.from_json(section_data)
 
     def delete_section(self, section_id: ModelID) -> bool:
+        """http://docs.gurock.com/testrail-api2/reference-sections#delete_section"""
         self.__request(f'delete_section/{section_id}', method='POST', _return_json=False)
         return True
 
     # Status API
+    """http://docs.gurock.com/testrail-api2/reference-statuses"""
     def get_statuses(self) -> typing.List[Status]:
+        """http://docs.gurock.com/testrail-api2/reference-statuses#get_statuses"""
         statuses_data = self.__request('get_statuses')
         return [Status.from_json(status) for status in statuses_data]
 
     # Templates API
+    """http://docs.gurock.com/testrail-api2/reference-templates"""
     def get_templates(self, project_id: typing.Optional[ModelID] = None) -> typing.List[Template]:
+        """http://docs.gurock.com/testrail-api2/reference-templates#get_templates"""
         project_id = project_id or self.project_id
         if project_id is None:
             raise TestRailException('Provide project id')
@@ -81,15 +92,19 @@ class TestRailClient:
         return [Template.from_json(template) for template in templates_data]
 
     # Users API
+    """http://docs.gurock.com/testrail-api2/reference-users"""
     def get_user(self, user_id: ModelID) -> User:
+        """http://docs.gurock.com/testrail-api2/reference-users#get_user"""
         user_data = self.__request(f'get_user/{user_id}')
         return User.from_json(user_data)
 
     def get_user_by_email(self, email: str) -> User:
+        """http://docs.gurock.com/testrail-api2/reference-users#get_user_by_email"""
         user_data = self.__request(f'get_user_by_email/{email}')
         return User.from_json(user_data)
 
     def get_users(self) -> typing.List[User]:
+        """http://docs.gurock.com/testrail-api2/reference-users#get_users"""
         users_data: typing.List[JsonData] = self.__request('get_users')
         return [User.from_json(user_data) for user_data in users_data]
 
