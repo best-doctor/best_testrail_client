@@ -5,6 +5,7 @@ import typing
 
 from best_testrail_client.custom_types import ModelID, Method, JsonData
 from best_testrail_client.exceptions import TestRailException
+from best_testrail_client.models.result_fields import ResultFields
 from best_testrail_client.models.section import Section
 from best_testrail_client.models.status import Status
 from best_testrail_client.models.template import Template
@@ -26,6 +27,13 @@ class TestRailClient:
     def set_project_id(self, project_id: ModelID) -> TestRailClient:
         self.project_id = project_id
         return self
+
+    # Result Fields API
+    """http://docs.gurock.com/testrail-api2/reference-results-fields"""
+    def get_result_fields(self) -> typing.List[ResultFields]:
+        """http://docs.gurock.com/testrail-api2/reference-results-fields#get_result_fields"""
+        result_fields_data = self.__request('get_result_fields')
+        return [ResultFields.from_json(result_fields) for result_fields in result_fields_data]
 
     # Sections API
     """http://docs.gurock.com/testrail-api2/reference-sections"""
@@ -51,7 +59,7 @@ class TestRailClient:
         project_id = project_id or self.project_id
         if project_id is None:
             raise TestRailException('Provide project id')
-        new_section_data = section.to_json()
+        new_section_data = section.to_json(include_none=False)
         section_data = self.__request(
             f'add_section/{project_id}', method='POST', data=new_section_data,
         )

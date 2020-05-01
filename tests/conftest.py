@@ -1,5 +1,6 @@
 import pytest
 
+from best_testrail_client.models.result_fields import ResultFields
 from best_testrail_client.models.section import Section
 from best_testrail_client.models.status import Status
 from best_testrail_client.models.template import Template
@@ -71,3 +72,36 @@ def section_data():
 @pytest.fixture
 def section(section_data):
     return Section.from_json(data_json=section_data)
+
+
+@pytest.fixture
+def result_fields_data():
+    return {
+        'configs': [
+            {
+                'context': {
+                    'is_global': True,
+                    'project_ids': None,
+                },
+                'id': 1,
+                'options': {
+                    'format': 'markdown',
+                    'has_actual': False,
+                    'has_expected': True,
+                    'is_required': False,
+                },
+            },
+        ],
+        'description': None,
+        'display_order': 1,
+        'id': 5,
+        'label': 'Steps',
+        'name': 'step_results',
+        'system_name': 'custom_step_results',
+        'type_id': 11,
+    }
+
+
+@pytest.fixture
+def result_fields(result_fields_data):
+    return ResultFields.from_json(data_json=result_fields_data)
