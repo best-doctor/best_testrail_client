@@ -7,6 +7,7 @@ from best_testrail_client.custom_types import ModelID, Method, JsonData
 from best_testrail_client.exceptions import TestRailException
 from best_testrail_client.models.case_types import CaseType
 from best_testrail_client.models.configuration import Configuration, GroupConfig
+from best_testrail_client.models.priority import Priority
 from best_testrail_client.models.result_fields import ResultFields
 from best_testrail_client.models.section import Section
 from best_testrail_client.models.status import Status
@@ -95,6 +96,12 @@ class TestRailClient:
         """http://docs.gurock.com/testrail-api2/reference-configs#delete_config"""
         self.__request(f'delete_config/{config_id}', method='POST', _return_json=False)
         return True
+
+    # Priorities API  http://docs.gurock.com/testrail-api2/reference-priorities
+    def get_priorities(self) -> typing.List[Priority]:
+        """http://docs.gurock.com/testrail-api2/reference-priorities#get_priorities"""
+        priorities_data = self.__request('get_priorities')
+        return [Priority.from_json(priority) for priority in priorities_data]
 
     # Result Fields API  http://docs.gurock.com/testrail-api2/reference-results-fields
     def get_result_fields(self) -> typing.List[ResultFields]:

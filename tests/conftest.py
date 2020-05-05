@@ -2,6 +2,7 @@ import pytest
 
 from best_testrail_client.models.case_types import CaseType
 from best_testrail_client.models.configuration import Configuration, GroupConfig
+from best_testrail_client.models.priority import Priority
 from best_testrail_client.models.result_fields import ResultFields
 from best_testrail_client.models.section import Section
 from best_testrail_client.models.status import Status
@@ -166,3 +167,19 @@ def configuration_data():
 @pytest.fixture
 def configuration(configuration_data):
     return Configuration.from_json(data_json=configuration_data)
+
+
+@pytest.fixture
+def priority_data():
+    return {
+        'id': 1,
+        'is_default': False,
+        'name': "1 - Don't Test",
+        'priority': 1,
+        'short_name': "1 - Don't",
+    }
+
+
+@pytest.fixture
+def priority(priority_data):
+    return Priority.from_json(data_json=priority_data)

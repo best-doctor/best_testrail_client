@@ -1,7 +1,7 @@
 from best_testrail_client.models.status import Status
 
 
-def test_template_from_json(status_data):
+def test_status_from_json(status_data):
     status = Status.from_json(data_json=status_data)
 
     assert status.color_bright == 12709313
