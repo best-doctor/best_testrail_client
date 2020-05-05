@@ -116,7 +116,7 @@ class TestRailClient:
         project_id = project_id or self.project_id
         if project_id is None:
             raise TestRailException('Provide project id')
-        suite = f'?suite_id={suite_id}' if suite_id else ''
+        suite = f'&suite_id={suite_id}' if suite_id else ''
         sections_data = self.__request(f'get_sections/{project_id}{suite}')
         return [Section.from_json(section) for section in sections_data]
 
