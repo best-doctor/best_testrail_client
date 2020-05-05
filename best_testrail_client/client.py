@@ -5,6 +5,7 @@ import typing
 
 from best_testrail_client.custom_types import ModelID, Method, JsonData
 from best_testrail_client.exceptions import TestRailException
+from best_testrail_client.models.case_types import CaseType
 from best_testrail_client.models.result_fields import ResultFields
 from best_testrail_client.models.section import Section
 from best_testrail_client.models.status import Status
@@ -27,6 +28,11 @@ class TestRailClient:
     def set_project_id(self, project_id: ModelID) -> TestRailClient:
         self.project_id = project_id
         return self
+
+    # Case Types API http://docs.gurock.com/testrail-api2/reference-cases-types
+    def get_case_types(self) -> typing.List[CaseType]:
+        case_types_data = self.__request('get_case_types')
+        return [CaseType.from_json(case_type) for case_type in case_types_data]
 
     # Result Fields API  http://docs.gurock.com/testrail-api2/reference-results-fields
     def get_result_fields(self) -> typing.List[ResultFields]:

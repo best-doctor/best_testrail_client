@@ -1,5 +1,6 @@
 import pytest
 
+from best_testrail_client.models.case_types import CaseType
 from best_testrail_client.models.result_fields import ResultFields
 from best_testrail_client.models.section import Section
 from best_testrail_client.models.status import Status
@@ -105,3 +106,17 @@ def result_fields_data():
 @pytest.fixture
 def result_fields(result_fields_data):
     return ResultFields.from_json(data_json=result_fields_data)
+
+
+@pytest.fixture
+def case_types_data():
+    return {
+        'id': 1,
+        'is_default': False,
+        'name': 'Automated',
+    }
+
+
+@pytest.fixture
+def case_types(case_types_data):
+    return CaseType.from_json(data_json=case_types_data)
