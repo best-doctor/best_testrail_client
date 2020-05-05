@@ -1,6 +1,7 @@
 import pytest
 
 from best_testrail_client.models.case_types import CaseType
+from best_testrail_client.models.configuration import Configuration, GroupConfig
 from best_testrail_client.models.result_fields import ResultFields
 from best_testrail_client.models.section import Section
 from best_testrail_client.models.status import Status
@@ -120,3 +121,48 @@ def case_types_data():
 @pytest.fixture
 def case_types(case_types_data):
     return CaseType.from_json(data_json=case_types_data)
+
+
+@pytest.fixture
+def group_config_data():
+    return {
+        'group_id': 1,
+        'id': 1,
+        'name': 'Chrome',
+    }
+
+
+@pytest.fixture
+def group_config(group_config_data):
+    return GroupConfig.from_json(data_json=group_config_data)
+
+
+@pytest.fixture
+def configuration_data():
+    return {
+        'configs': [
+            {
+                'group_id': 1,
+                'id': 1,
+                'name': 'Chrome',
+            },
+            {
+                'group_id': 1,
+                'id': 2,
+                'name': 'Firefox',
+            },
+            {
+                'group_id': 1,
+                'id': 3,
+                'name': 'Internet Explorer',
+            },
+        ],
+        'id': 1,
+        'name': 'Browsers',
+        'project_id': 1,
+    }
+
+
+@pytest.fixture
+def configuration(configuration_data):
+    return Configuration.from_json(data_json=configuration_data)

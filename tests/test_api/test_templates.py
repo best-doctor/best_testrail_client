@@ -16,7 +16,7 @@ def test_get_templates_with_provided_project(
 
 def test_get_templates_with_set_project(testrail_client, mocked_response, template_data, template):
     mocked_response(data_json=[template_data])
-    testrail_client.set_project_id(1)
+    testrail_client.set_project_id(project_id=1)
 
     api_templates = testrail_client.get_templates()
 

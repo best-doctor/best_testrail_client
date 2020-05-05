@@ -24,7 +24,7 @@ def test_get_sections_with_provided_project(
 
 def test_get_sections_with_set_project(testrail_client, mocked_response, section_data, section):
     mocked_response(data_json=[section_data])
-    testrail_client.set_project_id(1)
+    testrail_client.set_project_id(project_id=1)
 
     api_sections = testrail_client.get_sections()
 
@@ -50,7 +50,7 @@ def test_add_section_with_provided_project(testrail_client, mocked_response):
 def test_add_section_with_set_project(testrail_client, mocked_response):
     expected_section = Section(id=1, name='test')
     mocked_response(data_json=expected_section.to_json())
-    testrail_client.set_project_id(1)
+    testrail_client.set_project_id(project_id=1)
 
     section = testrail_client.add_section(Section(name='test'))
 

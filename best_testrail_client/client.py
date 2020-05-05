@@ -6,6 +6,7 @@ import typing
 from best_testrail_client.custom_types import ModelID, Method, JsonData
 from best_testrail_client.exceptions import TestRailException
 from best_testrail_client.models.case_types import CaseType
+from best_testrail_client.models.configuration import Configuration, GroupConfig
 from best_testrail_client.models.result_fields import ResultFields
 from best_testrail_client.models.section import Section
 from best_testrail_client.models.status import Status
@@ -29,10 +30,71 @@ class TestRailClient:
         self.project_id = project_id
         return self
 
-    # Case Types API http://docs.gurock.com/testrail-api2/reference-cases-types
+    # Case Types API  http://docs.gurock.com/testrail-api2/reference-cases-types
     def get_case_types(self) -> typing.List[CaseType]:
         case_types_data = self.__request('get_case_types')
         return [CaseType.from_json(case_type) for case_type in case_types_data]
+
+    # Configurations API  http://docs.gurock.com/testrail-api2/reference-configs
+    def get_configs(
+        self, project_id: typing.Optional[ModelID] = None,
+    ) -> typing.List[Configuration]:
+        """http://docs.gurock.com/testrail-api2/reference-configs#get_configs"""
+        project_id = project_id or self.project_id
+        if project_id is None:
+            raise TestRailException('Provide project id')
+        configurations_data = self.__request(f'get_configs/{project_id}')
+        return [
+            Configuration.from_json(configuration_data)
+            for configuration_data in configurations_data
+        ]
+
+    def add_config_group(
+        self, name: str, project_id: typing.Optional[ModelID] = None,
+    ) -> Configuration:
+        """http://docs.gurock.com/testrail-api2/reference-configs#add_config_group"""
+        new_config_group_data = {'name': name}
+        project_id = project_id or self.project_id
+        if project_id is None:
+            raise TestRailException('Provide project id')
+        config_group_data = self.__request(
+            f'add_config_group/{project_id}', method='POST', data=new_config_group_data,
+        )
+        return Configuration.from_json(config_group_data)
+
+    def add_config(self, name: str, config_group_id: ModelID) -> GroupConfig:
+        """http://docs.gurock.com/testrail-api2/reference-configs#add_config"""
+        new_config_data = {'name': name}
+        config_group_data = self.__request(
+            f'add_config/{config_group_id}', method='POST', data=new_config_data,
+        )
+        return GroupConfig.from_json(config_group_data)
+
+    def update_config_group(self, name: str, config_group_id: ModelID) -> Configuration:
+        """http://docs.gurock.com/testrail-api2/reference-configs#update_config_group"""
+        new_config_group_data = {'name': name}
+        config_group_data = self.__request(
+            f'update_config_group/{config_group_id}', method='POST', data=new_config_group_data,
+        )
+        return Configuration.from_json(config_group_data)
+
+    def update_config(self, name: str, config_id: ModelID) -> GroupConfig:
+        """http://docs.gurock.com/testrail-api2/reference-configs#update_config"""
+        new_config_data = {'name': name}
+        config_data = self.__request(
+            f'update_config/{config_id}', method='POST', data=new_config_data,
+        )
+        return GroupConfig.from_json(config_data)
+
+    def delete_config_group(self, config_group_id: ModelID) -> bool:
+        """http://docs.gurock.com/testrail-api2/reference-configs#update_config_group"""
+        self.__request(f'delete_config_group/{config_group_id}', method='POST', _return_json=False)
+        return True
+
+    def delete_config(self, config_id: ModelID) -> bool:
+        """http://docs.gurock.com/testrail-api2/reference-configs#delete_config"""
+        self.__request(f'delete_config/{config_id}', method='POST', _return_json=False)
+        return True
 
     # Result Fields API  http://docs.gurock.com/testrail-api2/reference-results-fields
     def get_result_fields(self) -> typing.List[ResultFields]:
