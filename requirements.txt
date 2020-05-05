@@ -1,5 +1,6 @@
 # main requirements
 requests==2.23.0
+safety==1.9.0
 
 # flake8 stuff
 flake8==3.7.9
