@@ -3,12 +3,13 @@ from __future__ import annotations
 import requests
 import typing
 
-from best_testrail_client.custom_types import ModelID, Method, JsonData
+from best_testrail_client.custom_types import ModelID, Method, JsonData, DeleteResult
 from best_testrail_client.exceptions import TestRailException
 from best_testrail_client.models.case_types import CaseType
 from best_testrail_client.models.configuration import Configuration, GroupConfig
 from best_testrail_client.models.priority import Priority
 from best_testrail_client.models.result_fields import ResultFields
+from best_testrail_client.models.run import Run
 from best_testrail_client.models.section import Section
 from best_testrail_client.models.status import Status
 from best_testrail_client.models.template import Template
@@ -87,12 +88,12 @@ class TestRailClient:
         )
         return GroupConfig.from_json(config_data)
 
-    def delete_config_group(self, config_group_id: ModelID) -> bool:
-        """http://docs.gurock.com/testrail-api2/reference-configs#update_config_group"""
+    def delete_config_group(self, config_group_id: ModelID) -> DeleteResult:
+        """http://docs.gurock.com/testrail-api2/reference-configs#delete_config_group"""
         self.__request(f'delete_config_group/{config_group_id}', method='POST', _return_json=False)
         return True
 
-    def delete_config(self, config_id: ModelID) -> bool:
+    def delete_config(self, config_id: ModelID) -> DeleteResult:
         """http://docs.gurock.com/testrail-api2/reference-configs#delete_config"""
         self.__request(f'delete_config/{config_id}', method='POST', _return_json=False)
         return True
@@ -108,6 +109,47 @@ class TestRailClient:
         """http://docs.gurock.com/testrail-api2/reference-results-fields#get_result_fields"""
         result_fields_data = self.__request('get_result_fields')
         return [ResultFields.from_json(result_fields) for result_fields in result_fields_data]
+
+    # Runs API  http://docs.gurock.com/testrail-api2/reference-runs
+    def get_run(self, run_id: ModelID) -> Run:
+        """http://docs.gurock.com/testrail-api2/reference-runs#get_run"""
+        run_data = self.__request(f'get_run/{run_id}')
+        return Run.from_json(data_json=run_data)
+
+    def get_runs(self, project_id: typing.Optional[ModelID] = None) -> typing.List[Run]:
+        """http://docs.gurock.com/testrail-api2/reference-runs#get_runs"""
+        project_id = project_id or self.project_id
+        if project_id is None:
+            raise TestRailException('Provide project id')
+        runs_data = self.__request(f'get_runs/{project_id}')
+        return [Run.from_json(data_json=run_data) for run_data in runs_data]
+
+    def add_run(self, run: Run, project_id: typing.Optional[ModelID] = None) -> Run:
+        """http://docs.gurock.com/testrail-api2/reference-runs#add_run"""
+        project_id = project_id or self.project_id
+        if project_id is None:
+            raise TestRailException('Provide project id')
+        new_run_data = run.to_json(include_none=False)
+        run_data = self.__request(f'add_run/{project_id}', method='POST', data=new_run_data)
+        return Run.from_json(data_json=run_data)
+
+    def update_run(self, updated_run: Run) -> Run:
+        """http://docs.gurock.com/testrail-api2/reference-runs#update_run"""
+        update_run_data = updated_run.to_json(include_none=False)
+        run_data = self.__request(
+            f'update_run/{updated_run.id}', method='POST', data=update_run_data,
+        )
+        return Run.from_json(data_json=run_data)
+
+    def close_run(self, run_id: ModelID) -> Run:
+        """http://docs.gurock.com/testrail-api2/reference-runs#close_run"""
+        run_data = self.__request(f'close_run/{run_id}', method='POST')
+        return Run.from_json(data_json=run_data)
+
+    def delete_run(self, run_id: ModelID) -> DeleteResult:
+        """http://docs.gurock.com/testrail-api2/reference-runs#delete_run"""
+        self.__request(f'delete_run/{run_id}', method='POST', _return_json=False)
+        return True
 
     # Sections API  http://docs.gurock.com/testrail-api2/reference-sections
     def get_section(self, section_id: ModelID) -> Section:
@@ -150,7 +192,7 @@ class TestRailClient:
         )
         return Section.from_json(section_data)
 
-    def delete_section(self, section_id: ModelID) -> bool:
+    def delete_section(self, section_id: ModelID) -> DeleteResult:
         """http://docs.gurock.com/testrail-api2/reference-sections#delete_section"""
         self.__request(f'delete_section/{section_id}', method='POST', _return_json=False)
         return True
