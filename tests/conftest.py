@@ -3,6 +3,7 @@ import pytest
 from best_testrail_client.models.case_types import CaseType
 from best_testrail_client.models.configuration import Configuration, GroupConfig
 from best_testrail_client.models.priority import Priority
+from best_testrail_client.models.result import Result
 from best_testrail_client.models.result_fields import ResultFields
 from best_testrail_client.models.run import Run
 from best_testrail_client.models.section import Section
@@ -228,3 +229,33 @@ def run_data():
 @pytest.fixture
 def run(run_data):
     return Run.from_json(data_json=run_data)
+
+
+@pytest.fixture
+def result_data():
+    return {
+        'assignedto_id': 1,
+        'comment': 'This test failed: ..',
+        'created_by': 1,
+        'created_on': 1393851801,
+        'custom_step_results': [
+            {
+                'step1': 'pass',
+            },
+            {
+                'step2': 'fail',
+            },
+        ],
+        'defects': 'TR-1',
+        'elapsed': '5m',
+        'id': 1,
+        'status_id': 5,
+        'test_id': 1,
+        'case_id': None,
+        'version': '1.0RC1',
+    }
+
+
+@pytest.fixture
+def result(result_data):
+    return Result.from_json(data_json=result_data)
