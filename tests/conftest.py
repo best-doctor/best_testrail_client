@@ -1,5 +1,6 @@
 import pytest
 
+from best_testrail_client.models.attachment import Attachment
 from best_testrail_client.models.case_types import CaseType
 from best_testrail_client.models.configuration import Configuration, GroupConfig
 from best_testrail_client.models.priority import Priority
@@ -259,3 +260,23 @@ def result_data():
 @pytest.fixture
 def result(result_data):
     return Result.from_json(data_json=result_data)
+
+
+@pytest.fixture
+def attachment_data():
+    return {
+        'id': 444,
+        'name': 'What-Testers-Should-Be-Automating.jpg',
+        'filename': '444.what_testers_should_be_automating.jpg',
+        'size': 166994,
+        'created_on': 1554737184,
+        'project_id': 14,
+        'case_id': 3414,
+        'test_change_id': 17899,
+        'user_id': 10,
+    }
+
+
+@pytest.fixture
+def attachment(attachment_data):
+    return Attachment.from_json(data_json=attachment_data)

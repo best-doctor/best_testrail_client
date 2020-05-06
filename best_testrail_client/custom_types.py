@@ -26,3 +26,8 @@ class CreatedFilters(StatusFilters, total=False):
     created_after: typing.Optional[TimeStamp]
     created_before: typing.Optional[TimeStamp]
     created_by: typing.Optional[typing.List[ModelID]]
+
+
+class AttachmentFile(typing_extensions.TypedDict):
+    name: str
+    file_content: bytes

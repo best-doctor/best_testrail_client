@@ -1,12 +1,15 @@
 from __future__ import annotations
 
+from json import JSONDecodeError
+
 import requests
 import typing
 
 from best_testrail_client.custom_types import (
-    ModelID, Method, JsonData, DeleteResult, CreatedFilters, StatusFilters,
+    ModelID, Method, JsonData, DeleteResult, CreatedFilters, StatusFilters, AttachmentFile,
 )
 from best_testrail_client.exceptions import TestRailException
+from best_testrail_client.models.attachment import Attachment
 from best_testrail_client.models.case_types import CaseType
 from best_testrail_client.models.configuration import Configuration, GroupConfig
 from best_testrail_client.models.priority import Priority
@@ -35,6 +38,40 @@ class TestRailClient:
     def set_project_id(self, project_id: ModelID) -> TestRailClient:
         self.project_id = project_id
         return self
+
+    # Attachments API  http://docs.gurock.com/testrail-api2/reference-attachments
+    def add_attachment_to_result(
+        self, result_id: ModelID, attachment_file: AttachmentFile,
+    ) -> typing.Optional[ModelID]:
+        """http://docs.gurock.com/testrail-api2/reference-attachments#add_attachment_to_result"""
+        attachment_data = self.__request(
+            f'add_attachment_to_result/{result_id}', method='POST', attachment=attachment_file,
+        )
+        return attachment_data.get('attachment_id')
+
+    def get_attachments_for_case(self, case_id: ModelID) -> typing.List[Attachment]:
+        """http://docs.gurock.com/testrail-api2/reference-attachments#get_attachments_for_case"""
+        attachments_data = self.__request(f'get_attachments_for_case/{case_id}')
+        return [
+            Attachment.from_json(data_json=attachment_data) for attachment_data in attachments_data
+        ]
+
+    def get_attachments_for_test(self, test_id: ModelID) -> typing.List[Attachment]:
+        """http://docs.gurock.com/testrail-api2/reference-attachments#get_attachments_for_test"""
+        attachments_data = self.__request(f'get_attachments_for_test/{test_id}')
+        return [
+            Attachment.from_json(data_json=attachment_data) for attachment_data in attachments_data
+        ]
+
+    def get_attachment(self, attachment_id: ModelID) -> Attachment:
+        """http://docs.gurock.com/testrail-api2/reference-attachments#get_attachment"""
+        attachment_data = self.__request(f'get_attachment/{attachment_id}')
+        return Attachment.from_json(data_json=attachment_data)
+
+    def delete_attachment(self, attachment_id: ModelID) -> DeleteResult:
+        """http://docs.gurock.com/testrail-api2/reference-attachments#delete_attachment"""
+        self.__request(f'delete_attachment/{attachment_id}', method='POST')
+        return True
 
     # Case Types API  http://docs.gurock.com/testrail-api2/reference-cases-types
     def get_case_types(self) -> typing.List[CaseType]:
@@ -94,12 +131,12 @@ class TestRailClient:
 
     def delete_config_group(self, config_group_id: ModelID) -> DeleteResult:
         """http://docs.gurock.com/testrail-api2/reference-configs#delete_config_group"""
-        self.__request(f'delete_config_group/{config_group_id}', method='POST', _return_json=False)
+        self.__request(f'delete_config_group/{config_group_id}', method='POST')
         return True
 
     def delete_config(self, config_id: ModelID) -> DeleteResult:
         """http://docs.gurock.com/testrail-api2/reference-configs#delete_config"""
-        self.__request(f'delete_config/{config_id}', method='POST', _return_json=False)
+        self.__request(f'delete_config/{config_id}', method='POST')
         return True
 
     # Priorities API  http://docs.gurock.com/testrail-api2/reference-priorities
@@ -242,7 +279,7 @@ class TestRailClient:
 
     def delete_run(self, run_id: ModelID) -> DeleteResult:
         """http://docs.gurock.com/testrail-api2/reference-runs#delete_run"""
-        self.__request(f'delete_run/{run_id}', method='POST', _return_json=False)
+        self.__request(f'delete_run/{run_id}', method='POST')
         return True
 
     # Sections API  http://docs.gurock.com/testrail-api2/reference-sections
@@ -287,7 +324,7 @@ class TestRailClient:
 
     def delete_section(self, section_id: ModelID) -> DeleteResult:
         """http://docs.gurock.com/testrail-api2/reference-sections#delete_section"""
-        self.__request(f'delete_section/{section_id}', method='POST', _return_json=False)
+        self.__request(f'delete_section/{section_id}', method='POST')
         return True
 
     # Statuses API  http://docs.gurock.com/testrail-api2/reference-statuses
@@ -322,17 +359,23 @@ class TestRailClient:
         return [User.from_json(user_data) for user_data in users_data]
 
     def __request(
-        self, url: str, data: typing.Optional[JsonData] = None, method: Method = 'GET',
-        _return_json: bool = True, params: JsonData = None,
+        self,
+        url: str, data: typing.Optional[JsonData] = None, method: Method = 'GET',
+        params: typing.Optional[JsonData] = None,
+        attachment: typing.Optional[AttachmentFile] = None,
     ) -> typing.Any:
         if data is None:
             data = {}
+        attach_files = None
+        if attachment is not None:
+            attach_files = {'attachment': (attachment['name'], attachment['file_content'])}
 
         response = requests.request(
             method, f'{self.base_url}{url}', json=data,
-            auth=(self.login, self.token), params=params,
+            auth=(self.login, self.token), params=params, files=attach_files,
         )
 
-        if _return_json:
+        try:
             return response.json()
-        return response
+        except JSONDecodeError:
+            return response
