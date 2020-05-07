@@ -7,17 +7,22 @@
 Implements [API v2](http://docs.gurock.com/testrail-api2/start) for [TestRail](https://www.gurock.com/testrail/).
 
 ## Installation
+
 ```bash
 pip install best_testrail_client
 ```
 
 ## Prerequisites
+
 1. Enabled API in your TestRail project.
-![Enable TestRail API](https://raw.githubusercontent.com/best-doctor/best_testrail_client/master/docs_img/enable_API.png)
-2. Generated API key.
-![Generate API key](https://raw.githubusercontent.com/best-doctor/best_testrail_client/master/docs_img/API_key.png)
+
+    ![Enable TestRail API](https://raw.githubusercontent.com/best-doctor/best_testrail_client/master/docs_img/enable_API.png)
+1. Generated API key.
+
+    ![Generate API key](https://raw.githubusercontent.com/best-doctor/best_testrail_client/master/docs_img/API_key.png)
 
 ## Usage
+
 ```python
 from best_testrail_client.client import TestRailClient
 from best_testrail_client.enums import BaseStatus
@@ -55,8 +60,10 @@ client.runs.close_run(run_id=created_run.id)
 ```
 
 ### Custom attributes
+
 Custom attributes are stored in `custom` dictionary attribute in models.
 It stores all data from API and converts it back.
+
 ```python
 from best_testrail_client.client import TestRailClient
 
