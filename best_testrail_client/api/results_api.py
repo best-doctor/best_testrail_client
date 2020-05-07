@@ -63,13 +63,13 @@ class ResultsAPI(BaseAPI):
 
     def add_result(self, test_id: ModelID, result: Result) -> Result:
         """http://docs.gurock.com/testrail-api2/reference-results#add_result"""
-        new_result_data = result.to_json()
+        new_result_data = result.to_json(include_none=False)
         result_data = self._request(f'add_result/{test_id}', method='POST', data=new_result_data)
         return Result.from_json(data_json=result_data)
 
     def add_result_for_case(self, run_id: ModelID, case_id: ModelID, result: Result) -> Result:
         """http://docs.gurock.com/testrail-api2/reference-results#add_result_for_case"""
-        new_result_data = result.to_json()
+        new_result_data = result.to_json(include_none=False)
         result_data = self._request(
             f'add_result_for_case/{run_id}/{case_id}', method='POST', data=new_result_data,
         )
@@ -78,7 +78,7 @@ class ResultsAPI(BaseAPI):
     def add_results(self, run_id: ModelID, results: typing.List[Result]) -> typing.List[Result]:
         """http://docs.gurock.com/testrail-api2/reference-results#add_results"""
         new_results_data = {
-            'results': [result.to_json() for result in results],
+            'results': [result.to_json(include_none=False) for result in results],
         }
         results_data = self._request(
             f'add_results/{run_id}', method='POST', data=new_results_data,
@@ -90,7 +90,7 @@ class ResultsAPI(BaseAPI):
     ) -> typing.List[Result]:
         """http://docs.gurock.com/testrail-api2/reference-results#add_results_for_cases"""
         new_results_data = {
-            'results': [result.to_json() for result in results],
+            'results': [result.to_json(include_none=False) for result in results],
         }
         results_data = self._request(
             f'add_results_for_cases/{run_id}', method='POST', data=new_results_data,

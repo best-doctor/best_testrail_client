@@ -1,6 +1,7 @@
 import pytest
 
 from best_testrail_client.models.attachment import Attachment
+from best_testrail_client.models.case import Case
 from best_testrail_client.models.case_type import CaseType
 from best_testrail_client.models.configuration import Configuration, GroupConfig
 from best_testrail_client.models.priority import Priority
@@ -280,3 +281,42 @@ def attachment_data():
 @pytest.fixture
 def attachment(attachment_data):
     return Attachment.from_json(data_json=attachment_data)
+
+
+@pytest.fixture
+def case_data():
+    return {
+        'created_by': 5,
+        'created_on': 1392300984,
+        'custom_expected': 'Custom Expected',
+        'custom_preconds': 'Custom Preconditions',
+        'custom_steps': 'Custom Steps',
+        'custom_steps_separated': [
+            {
+                'content': 'Step 1',
+                'expected': 'Expected Result',
+            },
+            {
+                'content': 'Step 2',
+                'expected': 'Expected Result 2',
+            },
+        ],
+        'estimate': '1m 5s',
+        'estimate_forecast': None,
+        'id': 1,
+        'milestone_id': 7,
+        'priority_id': 2,
+        'template_id': None,
+        'refs': 'RF-1, RF-2',
+        'section_id': 1,
+        'suite_id': 1,
+        'title': 'Change document attributes (author, title, organization)',
+        'type_id': 4,
+        'updated_by': 1,
+        'updated_on': 1393586511,
+    }
+
+
+@pytest.fixture
+def case(case_data):
+    return Case.from_json(data_json=case_data)

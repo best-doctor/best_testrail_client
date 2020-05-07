@@ -7,8 +7,8 @@ from best_testrail_client.utils import convert_list_to_filter
     'values_list, expected_result',
     [
         ([1, 2, 3], '1,2,3'),
-        ([], ''),
-        (None, ''),
+        ([], None),
+        (None, None),
     ],
 )
 def test_convert_list_to_filter(values_list, expected_result):

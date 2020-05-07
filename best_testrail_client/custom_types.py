@@ -29,6 +29,16 @@ class CreatedFilters(StatusFilters, total=False):
     created_by: typing.Optional[typing.List[ModelID]]
 
 
+class CaseFilter(CreatedFilters, total=False):
+    milestone_id: typing.Optional[typing.List[ModelID]]
+    priority_id: typing.Optional[typing.List[ModelID]]
+    template_id: typing.Optional[typing.List[ModelID]]
+    type_id: typing.Optional[typing.List[ModelID]]
+    updated_after: typing.Optional[TimeStamp]
+    updated_before: typing.Optional[TimeStamp]
+    updated_by: typing.Optional[typing.List[ModelID]]
+
+
 class AttachmentFile(typing_extensions.TypedDict):
     name: str
     file_content: bytes
