@@ -29,7 +29,7 @@ def test_get_cases_with_set_project(
     mocked_response(data_json=[case_data])
     testrail_client.set_project_id(project_id=1)
 
-    api_cases = testrail_client.cases.get_cases()
+    api_cases = testrail_client.cases.get_cases(filters={})
 
     assert len(api_cases) == 1
     assert api_cases[0] == case
@@ -60,3 +60,11 @@ def test_update_case(testrail_client, mocked_response):
     api_case = testrail_client.cases.update_case(case_id=1, case=expected_case)
 
     assert api_case == expected_case
+
+
+def test_delete_case(testrail_client, mocked_response):
+    mocked_response()
+
+    response = testrail_client.cases.delete_case(case_id=1)
+
+    assert response is True
