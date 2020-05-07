@@ -11,6 +11,7 @@ from best_testrail_client.api.runs_api import RunsAPI
 from best_testrail_client.api.sections_api import SectionsAPI
 from best_testrail_client.api.statuses_api import StatusesAPI
 from best_testrail_client.api.templates_api import TemplatesAPI
+from best_testrail_client.api.tests_api import TestsAPI
 from best_testrail_client.api.users_api import UsersAPI
 from best_testrail_client.custom_types import ModelID
 
@@ -30,6 +31,7 @@ class TestRailClient:
         self.sections = SectionsAPI(testrail_url, login, token)
         self.statuses = StatusesAPI(testrail_url, login, token)
         self.templates = TemplatesAPI(testrail_url, login, token)
+        self.tests = TestsAPI(testrail_url, login, token)
         self.users = UsersAPI(testrail_url, login, token)
 
     # Custom methods

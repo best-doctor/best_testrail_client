@@ -11,6 +11,7 @@ from best_testrail_client.models.run import Run
 from best_testrail_client.models.section import Section
 from best_testrail_client.models.status import Status
 from best_testrail_client.models.template import Template
+from best_testrail_client.models.test import Test
 from best_testrail_client.models.user import User
 
 
@@ -320,3 +321,38 @@ def case_data():
 @pytest.fixture
 def case(case_data):
     return Case.from_json(data_json=case_data)
+
+
+@pytest.fixture
+def test_data():
+    return {
+        'assignedto_id': 1,
+        'case_id': 1,
+        'custom_expected': 'Custom Expected',
+        'custom_preconds': 'Custom Preconditions',
+        'custom_steps_separated': [
+            {
+                'content': 'Step 1',
+                'expected': 'Expected Result 1',
+            },
+            {
+                'content': 'Step 2',
+                'expected': 'Expected Result 2',
+            },
+        ],
+        'estimate': '1m 5s',
+        'estimate_forecast': None,
+        'id': 100,
+        'milestone_id': None,
+        'priority_id': 2,
+        'run_id': 1,
+        'refs': None,
+        'status_id': 5,
+        'title': 'Verify line spacing on multi-page document',
+        'type_id': 4,
+    }
+
+
+@pytest.fixture
+def test(test_data):
+    return Test.from_json(data_json=test_data)
