@@ -1,9 +1,9 @@
 from best_testrail_client.enums import FieldType
-from best_testrail_client.models.result_fields import ResultFields
+from best_testrail_client.models.result_field import ResultField
 
 
-def test_result_fields_from_json(result_fields_data):
-    result_fields = ResultFields.from_json(data_json=result_fields_data)
+def test_result_fields_from_json(result_field_data):
+    result_fields = ResultField.from_json(data_json=result_field_data)
 
     assert len(result_fields.configs) == 1
     assert result_fields.configs[0].id == 1
@@ -22,7 +22,7 @@ def test_result_fields_from_json(result_fields_data):
     assert result_fields.description is None
 
 
-def test_result_fields_to_json(result_fields_data):
-    result_fields = ResultFields.from_json(data_json=result_fields_data)
+def test_result_fields_to_json(result_field_data):
+    result_fields = ResultField.from_json(data_json=result_field_data)
 
-    assert result_fields.to_json() == result_fields_data
+    assert result_fields.to_json() == result_field_data

@@ -43,6 +43,7 @@ setup(
     install_requires=[
         'setuptools',
         'requests>=2.22.0',
+        'typing_extensions>=3.7.2',
     ],
     url='https://github.com/best-doctor/best_testrail_client',
     license='MIT',

@@ -15,7 +15,7 @@ def testrail_client():
 def mocked_response(mocker):
     def _with_response(raw_data=None, data_json=None, status_code=200):
 
-        mocked_requests = mocker.patch('best_testrail_client.client.requests.request')
+        mocked_requests = mocker.patch('best_testrail_client.api.base_api.requests.request')
         response = requests.Response()
         if data_json is not None:
             response._content = json.dumps(data_json).encode('utf8')

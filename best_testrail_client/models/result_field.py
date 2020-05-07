@@ -10,7 +10,7 @@ from best_testrail_client.models.helpers import FieldConfig, Context, Options
 
 
 @dataclasses.dataclass
-class ResultFields(BaseModel):
+class ResultField(BaseModel):
     configs: typing.List[FieldConfig]
     display_order: int
     id: ModelID  # noqa: A003, VNE003
@@ -21,7 +21,7 @@ class ResultFields(BaseModel):
     description: typing.Optional[str] = None
 
     @classmethod
-    def from_json(cls: typing.Type[ResultFields], data_json: JsonData) -> ResultFields:
+    def from_json(cls: typing.Type[ResultField], data_json: JsonData) -> ResultField:
         data_json = dict(data_json)
         data_json['configs'] = [
             FieldConfig(
@@ -40,7 +40,7 @@ class ResultFields(BaseModel):
         ]
         data_json['type_id'] = FieldType(data_json['type_id'])
 
-        new_instance = ResultFields(
+        new_instance = ResultField(
             **data_json,
         )
 

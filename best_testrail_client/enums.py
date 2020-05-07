@@ -13,3 +13,11 @@ class FieldType(enum.Enum):
     MILESTONE = 9
     STEP_RESULTS = 11
     MULTI_SELECT = 12
+
+
+class BaseStatus(enum.Enum):
+    PASSED = 1
+    BLOCKED = 2
+    UNTESTED = 3
+    RETEST = 4
+    FAILED = 5
