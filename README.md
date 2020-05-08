@@ -3,6 +3,8 @@
 [![Build Status](https://travis-ci.org/best-doctor/best_testrail_client.svg?branch=master)](https://travis-ci.org/best-doctor/best_testrail_client)
 [![Maintainability](https://api.codeclimate.com/v1/badges/62075568c990aa8677c4/maintainability)](https://codeclimate.com/github/best-doctor/best_testrail_client/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/62075568c990aa8677c4/test_coverage)](https://codeclimate.com/github/best-doctor/best_testrail_client/test_coverage)
+[![PyPI version](https://badge.fury.io/py/best_testrail_client.svg)](https://badge.fury.io/py/best_testrail_client)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/best_testrail_client)](https://pypi.org/project/best_testrail_client/)
 
 Implements [API v2](http://docs.gurock.com/testrail-api2/start) for [TestRail](https://www.gurock.com/testrail/).
 
