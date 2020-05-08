@@ -6,6 +6,7 @@ def test_case_from_json(case_data):
 
     assert case.created_by == 5
     assert case.created_on == 1392300984
+    assert case.display_order is None
     assert case.estimate == '1m 5s'
     assert case.estimate_forecast is None
     assert case.id == 1

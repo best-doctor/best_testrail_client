@@ -15,7 +15,7 @@ class FieldType(enum.Enum):
     MULTI_SELECT = 12
 
 
-class BaseStatus(enum.Enum):
+class BaseResultStatus(enum.Enum):
     PASSED = 1
     BLOCKED = 2
     UNTESTED = 3

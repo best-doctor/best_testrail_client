@@ -10,6 +10,7 @@ from best_testrail_client.models.basemodel import BaseModel
 class Result(BaseModel):
     status_id: typing.Optional[ModelID]
     assignedto_id: typing.Optional[ModelID] = None
+    attachment_ids: typing.Optional[typing.List[ModelID]] = None
     comment: typing.Optional[str] = None
     created_by: typing.Optional[ModelID] = None
     created_on: typing.Optional[TimeStamp] = None

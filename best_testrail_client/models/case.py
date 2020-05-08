@@ -10,6 +10,7 @@ from best_testrail_client.models.basemodel import BaseModel
 class Case(BaseModel):
     created_by: typing.Optional[ModelID] = None
     created_on: typing.Optional[TimeStamp] = None
+    display_order: typing.Optional[int] = None
     estimate: typing.Optional[TimeSpan] = None
     estimate_forecast: typing.Optional[TimeSpan] = None
     id: typing.Optional[ModelID] = None  # noqa: A003, VNE003

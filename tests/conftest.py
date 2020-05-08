@@ -238,6 +238,7 @@ def run(run_data):
 def result_data():
     return {
         'assignedto_id': 1,
+        'attachment_ids': None,
         'comment': 'This test failed: ..',
         'created_by': 1,
         'created_on': 1393851801,
@@ -302,6 +303,7 @@ def case_data():
                 'expected': 'Expected Result 2',
             },
         ],
+        'display_order': None,
         'estimate': '1m 5s',
         'estimate_forecast': None,
         'id': 1,
@@ -348,6 +350,7 @@ def test_data():
         'run_id': 1,
         'refs': None,
         'status_id': 5,
+        'template_id': None,
         'title': 'Verify line spacing on multi-page document',
         'type_id': 4,
     }

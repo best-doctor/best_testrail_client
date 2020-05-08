@@ -5,6 +5,7 @@ def test_result_from_json(result_data):
     result = Result.from_json(data_json=result_data)
 
     assert result.assignedto_id == 1
+    assert result.attachment_ids is None
     assert result.comment == 'This test failed: ..'
     assert result.created_by == 1
     assert result.created_on == 1393851801

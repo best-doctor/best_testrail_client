@@ -27,6 +27,7 @@ setup(
     long_description=get_long_description(),
     long_description_content_type='text/markdown',
     classifiers=[
+        'Development Status :: 3 - Alpha',
         'Environment :: Console',
         'Operating System :: OS Independent',
         'Topic :: Software Development :: Libraries :: Python Modules',

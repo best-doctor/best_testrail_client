@@ -25,7 +25,7 @@ pip install best_testrail_client
 
 ```python
 from best_testrail_client.client import TestRailClient
-from best_testrail_client.enums import BaseStatus
+from best_testrail_client.enums import BaseResultStatus
 from best_testrail_client.models.result import Result
 from best_testrail_client.models.run import Run
 
@@ -49,8 +49,8 @@ client.set_project_id(project_id=2)
 
 # Add results for run
 results = [
-    Result(status_id=BaseStatus.PASSED.value, case_id=1, comment='Passed test'),
-    Result(status_id=BaseStatus.FAILED.value, case_id=2, comment='Failed test'),
+    Result(status_id=BaseResultStatus.PASSED.value, case_id=1, comment='Passed test'),
+    Result(status_id=BaseResultStatus.FAILED.value, case_id=2, comment='Failed test'),
     Result(status_id=6, case_id=3, comment='Waiting test'),  # Custom status
 ]
 client.results.add_results_for_cases(run_id=created_run.id, results=results)

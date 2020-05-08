@@ -14,6 +14,7 @@ def test_test_from_json(test_data):
     assert test.run_id == 1
     assert test.refs is None
     assert test.status_id == 5
+    assert test.template_id is None
     assert test.title == 'Verify line spacing on multi-page document'
     assert test.type_id == 4
     assert test.custom == {

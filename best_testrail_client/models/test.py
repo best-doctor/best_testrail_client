@@ -18,6 +18,7 @@ class Test(BaseModel):
     refs: typing.Optional[str] = None
     run_id: typing.Optional[ModelID] = None
     status_id: typing.Optional[ModelID] = None
+    template_id: typing.Optional[ModelID] = None
     title: typing.Optional[str] = None
     type_id: typing.Optional[ModelID] = None
     custom: typing.Optional[JsonData] = None
