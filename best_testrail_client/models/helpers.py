@@ -14,7 +14,7 @@ class Context(BaseModel):
 
 @dataclasses.dataclass
 class Options(BaseModel):
-    format: str   # noqa: VNE003
+    format: str   # noqa: VNE003, A003
     has_actual: bool
     has_expected: bool
     is_required: bool
