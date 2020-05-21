@@ -4,6 +4,7 @@ from best_testrail_client.models.attachment import Attachment
 from best_testrail_client.models.case import Case
 from best_testrail_client.models.case_type import CaseType
 from best_testrail_client.models.configuration import Configuration, GroupConfig
+from best_testrail_client.models.milestone import Milestone
 from best_testrail_client.models.priority import Priority
 from best_testrail_client.models.result import Result
 from best_testrail_client.models.result_field import ResultField
@@ -359,3 +360,27 @@ def test_data():
 @pytest.fixture
 def test(test_data):
     return Test.from_json(data_json=test_data)
+
+
+@pytest.fixture
+def milestone_data():
+    return {
+        'completed_on': 1389968184,
+        'description': 'Milestone description',
+        'due_on': 1391968184,
+        'id': 1,
+        'is_completed': False,
+        'name': 'Release 1.5',
+        'project_id': 1,
+        'is_started': True,
+        'milestones': [2, 3, 4],
+        'parent_id': None,
+        'start_on': 1389968184,
+        'started_on': 1389968184,
+        'url': 'http://<server>/testrail/index.php?/milestones/view/1',
+    }
+
+
+@pytest.fixture
+def milestone(milestone_data):
+    return Milestone.from_json(data_json=milestone_data)

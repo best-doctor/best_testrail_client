@@ -4,6 +4,7 @@ from best_testrail_client.api.attachments_api import AttachmentsAPI
 from best_testrail_client.api.case_types_api import CaseTypesAPI
 from best_testrail_client.api.cases_api import CasesAPI
 from best_testrail_client.api.configurations_api import ConfigurationsAPI
+from best_testrail_client.api.milestoness_api import MilestonesAPI
 from best_testrail_client.api.priorities_api import PrioritiesAPI
 from best_testrail_client.api.result_fields_api import ResultFieldsAPI
 from best_testrail_client.api.results_api import ResultsAPI
@@ -24,6 +25,7 @@ class TestRailClient:
         self.cases = CasesAPI(testrail_url, login, token)
         self.case_types = CaseTypesAPI(testrail_url, login, token)
         self.configurations = ConfigurationsAPI(testrail_url, login, token)
+        self.milestones = MilestonesAPI(testrail_url, login, token)
         self.priorities = PrioritiesAPI(testrail_url, login, token)
         self.results = ResultsAPI(testrail_url, login, token)
         self.result_fields = ResultFieldsAPI(testrail_url, login, token)
@@ -38,6 +40,7 @@ class TestRailClient:
     def set_project_id(self, project_id: ModelID) -> TestRailClient:
         self.cases.set_project_id(project_id=project_id)
         self.configurations.set_project_id(project_id=project_id)
+        self.milestones.set_project_id(project_id=project_id)
         self.runs.set_project_id(project_id=project_id)
         self.sections.set_project_id(project_id=project_id)
         self.templates.set_project_id(project_id=project_id)
