@@ -21,6 +21,8 @@ class BaseModel:
             if 'custom_' in key:
                 data.setdefault('custom', {})[key] = value
                 data.pop(key)
+            elif key not in cls.__annotations__:
+                data.pop(key)
         return cls(**data)
 
     @classmethod

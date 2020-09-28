@@ -40,3 +40,12 @@ def test_run_to_json(run_data):
     run = Run.from_json(data_json=run_data)
 
     assert run.to_json() == run_data
+
+
+def test_run_from_json_with_unexpected_key(run_data):
+    data_with_extra_key = dict(run_data)
+    data_with_extra_key['some_random_key'] = 'Some random value'
+
+    run = Run.from_json(data_json=data_with_extra_key)
+
+    assert run.to_json() == run_data

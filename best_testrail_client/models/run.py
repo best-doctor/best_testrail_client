@@ -30,5 +30,6 @@ class Run(BaseModel):
     suite_id: typing.Optional[ModelID] = None
     untested_count: typing.Optional[int] = None
     url: typing.Optional[str] = None
+    updated_on: typing.Optional[TimeStamp] = None
     refs: typing.Optional[str] = None
     custom: typing.Optional[JsonData] = None

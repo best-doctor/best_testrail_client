@@ -226,6 +226,7 @@ def run_data():
         'retest_count': 1,
         'suite_id': 4,
         'untested_count': 3,
+        'updated_on': 1393845644,
         'url': 'http://<server>/testrail/index.php?/runs/view/81',
     }
 
